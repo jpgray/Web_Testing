@@ -9,12 +9,15 @@ describe 'testing the demoqa registration page' do
     @driver_class.input_firstname_field(@fname)
     @driver_class.input_lastname_field(@lname)
     @driver_class.click_male_radio
-    @years_of_experience = rand(7).ceil
-    @driver_class.click_YoE_radio(@years_of_experience)
+    @years_of_experience_position = rand(7).floor
+    @driver_class.click_YoE_radio(@years_of_experience_position)
     @date = '15/05/1555'
     @driver_class.input_date_field(@date)
     @driver_class.click_manual_tester_radio
     @driver_class.click_automation_tester_radio
+    @driver_class.click_QTP_radio
+    @driver_class.click_Selenium_IDE_radio
+    @driver_class.click_Selenium_webdriver_radio
   end
 
   it "should land on the registration page" do
@@ -33,19 +36,39 @@ describe 'testing the demoqa registration page' do
     expect(@driver_class.male_radio_selected?).to be true
   end
 
-  it "should not change after a click on another sex radio button" do
+  it "should not change a different sex radio button after a click" do
     expect(@driver_class.female_radio_selected?).to be false
   end
 
   it "should accept a click on a Years of Experience radio button, but not affect others" do
-    i = 1
-    while i == 1
-      if i = @years_of_experience
-        expect(@driver_class.yoe_radio_selected?(@years_of_experience)).to be true
+    i = 0
+    while i <=6
+      if i == @years_of_experience_position
+        expect(@driver_class.yoe_radio_selected?(i)).to be true
       else
-        expect(@driver_class.yoe_radio_selected?(@years_of_experience)).to be false
+        expect(@driver_class.yoe_radio_selected?(i)).to be false
       end
-      i = i + 1
+      i += 1
+    end
+  end
+
+  it "should accept a second click on a Years of Experience radio button, to change selection" do
+    # reset the years of experience to new random choice
+
+    @yoe_2 = @years_of_experience_position
+    while @yoe_2 == @years_of_experience_position
+      @yoe_2 = rand(7).ceil
+    end
+    @driver_class.click_YoE_radio(@yoe_2)
+
+    j = 0
+    while j <= 6
+      if j == @yoe_2
+        expect(@driver_class.yoe_radio_selected?(j)).to be true
+      else
+        expect(@driver_class.yoe_radio_selected?(j)).to be false
+      end
+      j = j + 1
     end
   end
 
@@ -58,10 +81,22 @@ describe 'testing the demoqa registration page' do
     expect(@driver_class.automation_tester_radio_selected?).to be true
   end
 
-  it "should correctly untick a box after clicking a second time" do
+  it "should correctly untick a box after clicking a profession a second time" do
     @driver_class.click_automation_tester_radio
     expect(@driver_class.manual_tester_radio_selected?).to be true
     expect(@driver_class.automation_tester_radio_selected?).to be false
   end
 
+  it "should accept a click on an automation tool radio button" do
+    expect(@driver_class.qtp_radio_selected?).to be true
+    expect(@driver_class.selenium_IDE_radio_selected?).to be true
+    expect(@driver_class.selenium_webdriver_radio_selected?).to be true
+  end
+
+  it "should correctly untick a box after clicking an automation tool a second time" do
+    @driver_class.click_Selenium_webdriver_radio
+    expect(@driver_class.qtp_radio_selected?).to be true
+    expect(@driver_class.selenium_IDE_radio_selected?).to be true
+    expect(@driver_class.selenium_webdriver_radio_selected?).to be false
+  end
 end

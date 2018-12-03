@@ -12,6 +12,10 @@ class SeleniumQaToolsForm
     @practice_form_url = 'http://toolsqa.com/automation-practice-form/'
     @manual_tester_id = 'profession-0'
     @automation_tester_id = 'profession-1'
+    @QTP_id = 'tool-0'
+    @Selenium_IDE_id = 'tool-1'
+    @Selenium_webdriver_id = 'tool-2'
+
   end
 
   def visit_practice_form
@@ -84,6 +88,30 @@ class SeleniumQaToolsForm
 
   def automation_tester_radio_selected?
     @chrome_driver.find_element(:id, @automation_tester_id).selected?
+  end
+
+  def click_QTP_radio
+    @chrome_driver.find_element(:id, @QTP_id).click
+  end
+
+  def qtp_radio_selected?
+    @chrome_driver.find_element(:id, @QTP_id).selected?
+  end
+
+  def click_Selenium_IDE_radio
+    @chrome_driver.find_element(:id, @Selenium_IDE_id).click
+  end
+
+  def selenium_IDE_radio_selected?
+    @chrome_driver.find_element(:id, @Selenium_IDE_id).selected?
+  end
+
+  def click_Selenium_webdriver_radio
+    @chrome_driver.find_element(:id, @Selenium_webdriver_id).click
+  end
+
+  def selenium_webdriver_radio_selected?
+    @chrome_driver.find_element(:id, @Selenium_webdriver_id).selected?
   end
 end
 
