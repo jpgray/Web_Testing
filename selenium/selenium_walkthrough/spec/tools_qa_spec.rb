@@ -18,6 +18,8 @@ describe 'testing the demoqa registration page' do
     @driver_class.click_QTP_radio
     @driver_class.click_Selenium_IDE_radio
     @driver_class.click_Selenium_webdriver_radio
+    @continent_index = 2
+    @driver_class.select_continents_option(@continent_index)
   end
 
   it "should land on the registration page" do
@@ -98,5 +100,9 @@ describe 'testing the demoqa registration page' do
     expect(@driver_class.qtp_radio_selected?).to be true
     expect(@driver_class.selenium_IDE_radio_selected?).to be true
     expect(@driver_class.selenium_webdriver_radio_selected?).to be false
+  end
+
+  it "should correctly chose a continent from the dropdown menu" do
+    expect(@driver_class.get_chosen_continent(@continent_index)).to be true
   end
 end

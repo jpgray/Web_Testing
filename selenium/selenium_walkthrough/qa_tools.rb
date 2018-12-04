@@ -15,7 +15,7 @@ class SeleniumQaToolsForm
     @QTP_id = 'tool-0'
     @Selenium_IDE_id = 'tool-1'
     @Selenium_webdriver_id = 'tool-2'
-
+    @continents_id = 'continents'
   end
 
   def visit_practice_form
@@ -113,11 +113,16 @@ class SeleniumQaToolsForm
   def selenium_webdriver_radio_selected?
     @chrome_driver.find_element(:id, @Selenium_webdriver_id).selected?
   end
-end
 
-# test = SeleniumQaToolsForm.new
-# test.visit_practice_form
-# test.input_firstname_field('Mon')
-# test.input_lastname_field('Goose')
-# test.click_male_radio
-# sleep 5
+  def select_continents_option(index)
+    dropdown = @chrome_driver.find_element(:id, @continents_id)
+    dropdown.click
+    dropdown.find_elements(:tag_name, 'option')[index].click
+  end
+
+  def get_chosen_continent(index)
+    dropdown = @chrome_driver.find_element(:id, @continents_id)
+    dropdown.text
+    dropdown.find_elements(:tag_name, 'option')[index].selected?
+  end
+end
