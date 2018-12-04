@@ -18,8 +18,10 @@ describe 'testing the demoqa registration page' do
     @driver_class.click_QTP_radio
     @driver_class.click_Selenium_IDE_radio
     @driver_class.click_Selenium_webdriver_radio
-    @continent_index = 2
+    @continent_index = rand(7).floor
     @driver_class.select_continents_option(@continent_index)
+    @selenium_command_index = rand(4).floor
+    @driver_class.select_selenium_command_option(@selenium_command_index)
   end
 
   it "should land on the registration page" do
@@ -103,6 +105,27 @@ describe 'testing the demoqa registration page' do
   end
 
   it "should correctly chose a continent from the dropdown menu" do
-    expect(@driver_class.get_chosen_continent(@continent_index)).to be true
+    k=0
+    while k<=6
+      puts k
+      if k == @continent_index
+        expect(@driver_class.chosen_continent_selected?(k)).to be true
+      else
+        expect(@driver_class.chosen_continent_selected?(k)).to be false
+      end
+      k = k + 1
+    end
+  end
+
+  it "should correctly chose a selenium command from it's menu" do
+    l=0
+    while l<=6
+      if l == @selenium_command_index
+        expect(@driver_class.chosen_selenium_command_selected?(l)).to be true
+      else
+        expect(@driver_class.chosen_selenium_command_selected?(l)).to be false
+      end
+      l = l + 1
+    end
   end
 end

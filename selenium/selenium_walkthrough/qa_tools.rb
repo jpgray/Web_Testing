@@ -16,6 +16,7 @@ class SeleniumQaToolsForm
     @Selenium_IDE_id = 'tool-1'
     @Selenium_webdriver_id = 'tool-2'
     @continents_id = 'continents'
+    @selenium_commands_id = 'continents'
   end
 
   def visit_practice_form
@@ -117,12 +118,24 @@ class SeleniumQaToolsForm
   def select_continents_option(index)
     dropdown = @chrome_driver.find_element(:id, @continents_id)
     dropdown.click
+    # dropdown.find_elements(:tag_name, 'option')[index].hover
+    puts dropdown.find_elements(:tag_name, 'option')[index].text
     dropdown.find_elements(:tag_name, 'option')[index].click
   end
 
-  def get_chosen_continent(index)
+  def chosen_continent_selected?(index)
     dropdown = @chrome_driver.find_element(:id, @continents_id)
-    dropdown.text
     dropdown.find_elements(:tag_name, 'option')[index].selected?
+  end
+
+  def select_selenium_command_option(index)
+    menu = @chrome_driver.find_element(:id, @selenium_commands_id)
+    # menu.find_elements(:tag_name, 'option')[index].hover
+    menu.find_elements(:tag_name, 'option')[index].click
+  end
+
+  def chosen_selenium_command_selected?(index)
+    menu = @chrome_driver.find_element(:id, @selenium_commands_id)
+    menu.find_elements(:tag_name, 'option')[index].selected?
   end
 end
